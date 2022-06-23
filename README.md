@@ -2,6 +2,8 @@
 
 A simple maths game using Haskell
 
+![build and test](https://github.com/florenceafo/math-game/actions/workflows/haskell.yml/badge.svg)
+
 ## Built with
 
 
