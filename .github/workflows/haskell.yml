@@ -23,16 +23,11 @@ jobs:
         stack-version: '2.7.5'
 
     - name: Cache
-      uses: actions/cache@v3
-      env:
-        cache-name: cache-cabal
-      with:
-        path: ~/.cabal
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/*.cabal') }}-${{ hashFiles('**/cabal.project') }}
-        restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
+      uses: |
+        - .stack
+        - .stack-work
+        - target
+
 
     - name: Install dependencies
       run: |
