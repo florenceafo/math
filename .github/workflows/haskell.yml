@@ -38,7 +38,7 @@ jobs:
       run: |
         stack update
         stack build --only-dependencies --enable-tests --enable-benchmarks
-   # - name: Build
-    #  run: cabal build --enable-tests --enable-benchmarks all
-    #- name: Run tests
-    #  run: cabal test all
+    - name: Build
+      run: stack exec math-exe
+    - name: Run tests
+      run: stack test
