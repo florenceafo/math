@@ -1,8 +1,9 @@
 module Main where
 
 import Lib
--- import Data.Bool
+import Data.Bool
 import System.Random
+
 
 main :: IO ()
 main = do
@@ -12,41 +13,14 @@ main = do
     -- let p = (read input :: Int) -- string to int
     -- let q = printOut p -- call another function 
     -- print q
-    -- putStrLn . unwords . map show $ createList
-    -- putStrLn . unwords . map show $ map getNumber createInitBoard 
+
+    i <- drawInt 1 20 -- Get value out of a promise using `<-` in do block
+    print i
     putStrLn . unwords . map show $ map fst createInitBoard 
     putStrLn . unwords . map show $ map snd createInitBoard 
 
+drawInt :: Int -> Int -> IO Int
+drawInt x y = getStdRandom (randomR (x,y))
 
-
--- stack build
--- stack exec math-exe
-
-
--- printOut :: Int -> Int
--- printOut n = n * 3
-
--- createList :: [Int]
--- createList = [1..20]
-
-createInitBoard :: [(Int, Bool)]
+createInitBoard :: [(Integer, Bool)]
 createInitBoard = zip [1..] $ take 20 (repeat False)
-
--- -- randomiseList :: [Int] -> [Int]
--- -- randomiseList 
--- -- threeCoins :: StdGen -> (Bool, Bool, Bool)  
--- -- threeCoins gen =   
--- --     let (firstCoin, newGen) = random gen  
--- --         (secondCoin, newGen') = random newGen  
--- --         (thirdCoin, newGen'') = random newGen'  
--- --     in  (firstCoin, secondCoin, thirdCoin)  
-
--- -- getNumber :: (Int, Bool) -> Int
--- -- getNumber (num, solved) = num
-
--- printList :: [Int] -> String
--- printList [] = []
--- printList (x:xs) = show x ++ printList xs
-
-
-
