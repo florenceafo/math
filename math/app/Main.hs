@@ -6,72 +6,52 @@ import Data.List
 import Data.Function (on)
 import System.Random
 import Control.Monad(when, replicateM) 
+import Test.QuickCheck
 
 -- stack run math-game
 
--- allBlankBoard :: [Maybe Int]
--- allBlankBoard = [Nothing | _ <- [1..16]]
+-- choose hand - four numbers
 
-chooseNumbers :: [Maybe Int] -> [Int] -> [Maybe Int]
-chooseNumbers a b = a \\ map Just b
+-- init board
+    -- numbers 1 to 20, minus the 4 numbers chosen
+    -- set all numbers to unsolved
+initBoard :: [Int] -> [(Int, Bool)]
+initBoard hand = zip ([1..20] \\ hand) (repeat False)
 
+-- print board
+    -- add a star if unsolved
+showTuple :: (Int, Bool) -> String
+showTuple (a, False) = show a ++ "*"
+showTuple (a, True) = show a
 
-printBoard :: [Maybe Int] -> IO()
-printBoard b =  (putStrLn.unwords.map showNumber) b -- alt: map $ show $ map b 
+printBoard :: [(Int, Bool)] -> IO()
+printBoard board = mapM_ (putStrLn . showTuple) board
 
-showNumber :: Maybe Int -> String
-showNumber (Just n) = show n
-showNumber _        = "-"
+-- print hand
+printHand :: [Int] -> IO()
+printHand = putStrLn.unwords.map show 
 
--- addNumberToBoard :: [Maybe Int] -> Int -> [Maybe Int]
--- addNumberToBoard (b:bs) _ = []
--- addNumberToBoard b n =  init b ++ [Just n]
+-- check if the board has been solved i.e. if all numbers are true
+isBoardSolved :: [(Int, Bool)] -> Bool
+isBoardSolved board = False
 
--- method 1: prints random list of numbers, between 1 and 20
--- randomListOne :: Int -> IO [Int]
--- randomListOne n = sequence $ replicate n $ randomRIO (1,20::Int)
+isNumSolved :: (Int, Bool) -> Bool
+isNumSolved num = False
 
--- method 2: prints random list of numbers, between 1 and 20
--- randomListTwo :: Int -> IO([Int])
--- randomListTwo 0 = return []
--- randomListTwo n = do
---     r  <- randomRIO (1,20)
---     rs <- randomListTwo (n-1)
---     return (r:rs) 
+doubleNum :: Int -> Int
+doubleNum n = n * 2
 
--- get s random number
--- drawInt :: IO Int
--- drawInt = getStdRandom(randomR (1, 20))
+prop_doubleNum :: Int -> Bool
+prop_doubleNum n = doubleNum n == 2 * n
 
--- to do: use this after shuffling numbers
--- createInitBoard :: [(Integer, Bool)]
--- createInitBoard = zip [1..] $ take 20 (repeat False)
 
 main :: IO ()
 main = do
-    -- printBoard allBlankBoard
-    -- get user input
-    -- putStrLn "Enter a number"
-    -- input <- getLine -- read user input
-    -- putStrLn input
-    -- add input to board 
-    -- let b = allBlankBoard
-    -- let updatedBoard = addNumberToBoard b $ read input 
-    -- printBoard updatedBoard
 
-    -- prints random list of numbers
-    -- putStrLn "random numbers, between 1 and 20, with duplicates"
-    -- board2 <- randomListOne 20
-    -- let boardmap = map Just board2
-    -- printBoard boardmap
-    -- prints random list ------
+    putStrLn "hand"
+    let hand = [1, 3, 7, 10]
+    printHand hand
 
-    -- prints a list of numbers between 1 and 20
-    putStrLn "\nordered set of numbers, between 1 and 20"
-    let b = map Just [1..20]
-    printBoard b
-    let c = chooseNumbers b [1..4]
-    printBoard c
-    -- to do: shuffle list
-    -- to do: add bool to numbers, using createInitBoard
-    -- to do: split into 16:4
+    putStrLn "board"
+    let board = initBoard hand
+    printBoard board
