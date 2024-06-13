@@ -22,12 +22,12 @@ main = do
     let board = initBoard hand
     -- printBoard board
 
-    --printBoard $ updateBoard 14 board
+    printBoard $ updateBoard 5 board
 
-    let e = printExp (Operator Add (Num 1) (Num 2))
-    print e
-    let e2 = (Operator Sub (Num 20) (Num 2))
-    let res = evalExp e2
-    print res
+    -- let e = printExp (Operator Add (Num 1) (Num 2))
+    -- print e
+    -- let e2 = (Operator Sub (Num 20) (Num 2))
+    -- let res = evalExp e2
+    -- print res
 
-    print ""
+    -- print ""

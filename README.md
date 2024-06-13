@@ -20,6 +20,8 @@ A simple maths game using Haskell
 
 `stack exec math-exe`
 
+`stack test`
+
 
 ## Game instructions
 
