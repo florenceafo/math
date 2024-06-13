@@ -4,6 +4,7 @@ module Lib
 
 import Data.Bool
 import Data.List
+import Data.Maybe
 import Data.Function (on)
 import Control.Monad(when, replicateM) 
 import System.Random
@@ -36,9 +37,10 @@ printHand = putStrLn.unwords.map show
 updateBoard :: Int -> [(Int, Bool)] -> [(Int, Bool)]
 updateBoard i board = a ++ ([updated i board]) ++ b
     where
-        a = take i board
-        b = drop (i + 1) board
-        updated i board = updateNum $ board !! i
+        index = fromMaybe (-1) $ findIndex ((i ==) . fst) board
+        a = take index board
+        b = drop (index + 1) board
+        updated i board = updateNum $ board !! index
     
 updateNum :: (Int, Bool) -> (Int, Bool)
 updateNum (n, _) = (n, True) 
